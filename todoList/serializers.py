@@ -50,18 +50,3 @@ class AddCommentSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['id', 'created', 'modified']
 
-class AddOnlyTaskSerializer(serializers.ModelSerializer):
-    """Model Serializer for Task with specific fields"""
-
-    class Meta:
-        model = Task
-        fields = [
-            'id',
-            'name',
-            'status',
-            'description',
-            'created',
-            'modified'
-        ]
-        read_only_fields = ['id', 'created', 'modified']
-

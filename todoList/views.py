@@ -5,7 +5,7 @@ from todoList.models import (Task, TodoList, Comment)
 from rest_framework.response import Response
 from rest_framework import status
 from todoList.serializers import (AddTaskSerializer,
-	AddTodoListSerializer, AddCommentSerializer, AddOnlyTaskSerializer)
+	AddTodoListSerializer, AddCommentSerializer)
 
 
 class AddTaskViewSet(viewsets.ModelViewSet):
@@ -16,7 +16,10 @@ class AddTaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
 
     def create(self, request):
-        """Post method"""
+        """
+        To add just task pass enpty string to todo_list
+        To add task to todolist pass id of todolist
+        """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             task = serializer.save()
@@ -64,24 +67,4 @@ class AddCommentViewSet(viewsets.ModelViewSet):
                 'message': 'Todo List is created successfully.',
             }, status.HTTP_201_CREATED,)
 
-
-class AddOnlyTask(CreateAPIView):
-    """Add only task"""
-    queryset = Task.objects.all()
-    serializer_class = AddOnlyTaskSerializer
-
-    def create(self, request, format='json'):
-        """docstring"""
-        params = request.data
-        serializer = self.get_serializer(data=params)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response({
-            'data' : serializer.data,
-            'message': 'Task is created successfully.',
-            }, status=status.HTTP_201_CREATED)
-
-    def perform_create(self, serializer):
-        """docstring"""
-        serializer.save()
 

@@ -9,5 +9,4 @@ router.register(r'comment', views.AddCommentViewSet, basename='comment')
 
 urlpatterns = [
     path('v1/', include(router.urls)),
-    path('add-only-task', views.AddOnlyTask.as_view(), name='add-only-task'),
 ]
