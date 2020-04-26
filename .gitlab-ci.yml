@@ -1,0 +1,32 @@
+image: docker:stable
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - docker login registry.gitlab.com
+
+stages:
+  - build
+  - deploy
+
+build-prod:
+  stage: build
+  # tags:
+  #   - latest
+  script:
+    - docker build -t $CI_REGISTRY/"$GITLAB_USER_NAME"/$CI_PROJECT_NAME/manage_todo_lost .
+    - docker push $CI_REGISTRY/"$GITLAB_USER_NAME"/$CI_PROJECT_NAME/manage_todo_lost
+
+  only:
+    - master
+
+deploy-prod:
+  stage: deploy
+  script:
+    - sudo docker stack deploy -c docker-stack-ci-cd.yml --with-registry-auth teachquran-stack
+    - docker images --digests=true
+
+  only:
+    - master

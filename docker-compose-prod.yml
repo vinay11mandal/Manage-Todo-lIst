@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  django:
+    container_name: todo_list_manage
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/tooList
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    restart: always
