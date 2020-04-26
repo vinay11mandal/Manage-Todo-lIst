@@ -1,42 +1,59 @@
 # TODO LIST
 
+#### Description
+Rest Api's for Managing the Todo List.
 
-## Restful API for managing the TODO List
-Basic Requirement:
+#### Tools and technologies
+Language: Python 3.6
+Framework: Django 2.2
+Database: Postgres 11.5 (RDS)
+API: Django rest framework
+Code Repository : Gitlab
+API test tool: Swagger
+Containerization: Docker
+
+#### Install Docker into ubuntu
 ```
-Python3
-```
-```
-Django 2.2
-```
-```
-django rest framework
-```
-
-## Setting up Deveopment environment
-This project has been built on Python3 and Django 2.2.
-
-## To run on local the requirements need to be installed
-```
-pip install -r requirements.txt
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+apt-cache policy docker-ce
+sudo apt-get install -y docker-ce
+sudo systemctl status docker
 ```
 
+#### Application run  into local.
+1. Take a clone of the repo using https.
+```
+git clone https://gitlab.com/vinay11mandal/todo-list.git
+```
 
-## Starting  server for local
+2. Install docker compose
+```
+sudo apt install docker-compose
+```
+Run below to commands
 
 ```
-python manage.py runserver
+sudo docker-compose -f docker-compose-prod.yml build
 ```
-This will make the server availble on http://localhost:8000
 
-## Hosting 
-Currently the application is hosted in AWS.
+```
+sudo docker-compose -f docker-compose-prod.yml up --no-build
+```
+or for running the process in background run
 
+```
+sudo docker-compose -f docker-compose-prod.yml up --no-build -d
+```
 
-## API list
+4. Open URL into the browser.
+```
+http://0.0.0.0:8000
+```
+5. API test and doc's
+```
+http://0.0.0.0:8000/swagger/
+http://0.0.0.0:8000/redoc/
+```
 
-Swagger is implemented for API's
-
-To test the API for local
-
-http://127.0.0.1:8000/swagger/
